@@ -2163,7 +2163,7 @@ int TestEACompiler()
 
 	#if !defined(EA_COMPILER_NO_UNICODE_CHAR_NAME_LITERALS)
 	{
-		const char8_t str1[] = "\u2018\u2019";
+		const char8_t str1[] = u8"\u2018\u2019";
 		static_assert(EAArrayCount(str1) == 7, "EA_COMPILER_NO_UNICODE_CHAR_NAME_LITERALS failure.");
 
 		#if (EA_WCHAR_SIZE >= 2)
@@ -2230,6 +2230,10 @@ int TestEACompiler()
 	return nErrorCount;
 }
 
+
+// Used by the EA_EXPORT test in TestEACompilerTraits. It is declared at namespace scope because
+// exported members need external linkage, which a class local to a function doesn't have.
+struct EAExportTestStruct { EA_EXPORT void DoNothing(){} };
 
 #if defined(EA_COMPILER_MSVC) && EA_COMPILER_VERSION >= 1900	// VS2015+
 	EA_DISABLE_VC_WARNING(5029);  // nonstandard extension used: alignment attributes in C++ apply to variables, data members and tag types only
@@ -2686,8 +2690,7 @@ int TestEACompilerTraits()
 
 
 	{ // EA_EXPORT
-		struct X{ EA_EXPORT void DoNothing(){} };
-		X x;
+		EAExportTestStruct x;
 		x.DoNothing();
 	}
 
