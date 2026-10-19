@@ -426,7 +426,7 @@ void DoError(int& nErrorCount, const char* pMessage)
 {
 	++nErrorCount;
 	if(pMessage)
-		EA::EAMain::Report("Test error: %s\n", pMessage);
+		EA::EAMain::Report(EA_CHAR8("Test error: %s\n"), pMessage);
 }
 
 
@@ -3690,54 +3690,54 @@ int EAMain(int, char**)
 
 
 	nErrorCount = TestEABase();
-	EA::EAMain::Report("EABase test failure count: %d\n\n", nErrorCount);
+	EA::EAMain::Report(EA_CHAR8("EABase test failure count: %d\n\n"), nErrorCount);
 	nTotalErrorCount += nErrorCount;
 
 	nErrorCount = TestEAResult();
-	EA::EAMain::Report("EAResult test failure count: %d\n\n", nErrorCount);
+	EA::EAMain::Report(EA_CHAR8("EAResult test failure count: %d\n\n"), nErrorCount);
 	nTotalErrorCount += nErrorCount;
 
 	nErrorCount = TestEAPlatform();
-	EA::EAMain::Report("EAPlatform test failure count: %d\n\n", nErrorCount);
+	EA::EAMain::Report(EA_CHAR8("EAPlatform test failure count: %d\n\n"), nErrorCount);
 	nTotalErrorCount += nErrorCount;
 
 	nErrorCount = TestEACompiler();
-	EA::EAMain::Report("EACompiler test failure count: %d\n\n", nErrorCount);
+	EA::EAMain::Report(EA_CHAR8("EACompiler test failure count: %d\n\n"), nErrorCount);
 	nTotalErrorCount += nErrorCount;
 
 	nErrorCount = TestEACompilerTraits();
-	EA::EAMain::Report("EACompilerTraits test failure count: %d\n\n", nErrorCount);
+	EA::EAMain::Report(EA_CHAR8("EACompilerTraits test failure count: %d\n\n"), nErrorCount);
 	nTotalErrorCount += nErrorCount;
 
 	nErrorCount = TestNullPtr();
-	EA::EAMain::Report("nullptr test failure count: %d\n\n", nErrorCount);
+	EA::EAMain::Report(EA_CHAR8("nullptr test failure count: %d\n\n"), nErrorCount);
 	nTotalErrorCount += nErrorCount;
 
 	nErrorCount = TestEAHave();
-	EA::EAMain::Report("EAHave test failure count: %d\n\n", nErrorCount);
+	EA::EAMain::Report(EA_CHAR8("EAHave test failure count: %d\n\n"), nErrorCount);
 	nTotalErrorCount += nErrorCount;
 
 	nErrorCount = TestEAAlignment();
-	EA::EAMain::Report("EAAlignment test failure count: %d\n\n", nErrorCount);
+	EA::EAMain::Report(EA_CHAR8("EAAlignment test failure count: %d\n\n"), nErrorCount);
 	nTotalErrorCount += nErrorCount;
 
 	nErrorCount = TestEAStdarg();
-	EA::EAMain::Report("EAStdarg test failure count: %d\n\n", nErrorCount);
+	EA::EAMain::Report(EA_CHAR8("EAStdarg test failure count: %d\n\n"), nErrorCount);
 	nTotalErrorCount += nErrorCount;
 
 	nErrorCount = TestEAUnits();
-	EA::EAMain::Report("EAUnits test failure count: %d\n\n", nErrorCount);
+	EA::EAMain::Report(EA_CHAR8("EAUnits test failure count: %d\n\n"), nErrorCount);
 	nTotalErrorCount += nErrorCount;
 
 	nErrorCount = TestEAInt128_t();
-	EA::EAMain::Report("EAInt128_t test failure count: %d\n\n", nErrorCount);
+	EA::EAMain::Report(EA_CHAR8("EAInt128_t test failure count: %d\n\n"), nErrorCount);
 	nTotalErrorCount += nErrorCount;
 
 
 	if (nTotalErrorCount == 0)
-		EA::EAMain::Report("\nAll tests completed successfully.\n");
+		EA::EAMain::Report(EA_CHAR8("\nAll tests completed successfully.\n"));
 	else
-		EA::EAMain::Report("\nTests failed. Total error count: %d\n", nTotalErrorCount);
+		EA::EAMain::Report(EA_CHAR8("\nTests failed. Total error count: %d\n"), nTotalErrorCount);
 	
 	return nTotalErrorCount;
 }
