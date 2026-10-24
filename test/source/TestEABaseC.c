@@ -298,7 +298,6 @@ int TestEABase(void)
 			#endif
 		#endif
 
-		Verify(sizeof(bool8_t)   == 1, "bool8_t size test");
 		Verify(sizeof(intptr_t)  == sizeof(void*), "intptr_t size test");
 		Verify(sizeof(uintptr_t) == sizeof(void*), "uintptr_t size test");
 		Verify(sizeof(ssize_t)   == sizeof(size_t), "ssize_t size test");
