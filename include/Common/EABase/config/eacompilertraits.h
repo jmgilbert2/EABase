@@ -262,25 +262,17 @@
 
 	// ------------------------------------------------------------------------
 	// EA_OFFSETOF
-	// Implements a portable version of the non-standard offsetof macro.
+	// The standard offsetof macro from <stddef.h>.
 	//
-	// The offsetof macro is guaranteed to only work with POD types. However, we wish to use
-	// it for non-POD types but where we know that offsetof will still work for the cases 
-	// in which we use it. GCC unilaterally gives a warning when using offsetof with a non-POD,
-	// even if the given usage happens to work. So we make a workaround version of offsetof
-	// here for GCC which has the same effect but tricks the compiler into not issuing the warning.
-	// The 65536 does the compiler fooling; the reinterpret_cast prevents the possibility of
-	// an overloaded operator& for the class getting in the way.
+	// offsetof is only guaranteed to work with standard-layout types. Using it with
+	// other types is conditionally-supported; GCC and clang support it with a
+	// -Winvalid-offsetof warning.
 	//
 	// Example usage:
 	//     struct A{ int x; int y; };
 	//     size_t n = EA_OFFSETOF(A, y);
 	//
-	#if defined(__GNUC__)                       // We can't use GCC 4's __builtin_offsetof because it mistakenly complains about non-PODs that are really PODs.
-		#define EA_OFFSETOF(struct_, member_)  ((size_t)(((uintptr_t)&reinterpret_cast<const volatile char&>((((struct_*)65536)->member_))) - 65536))
-	#else
-		#define EA_OFFSETOF(struct_, member_)  offsetof(struct_, member_)
-	#endif
+	#define EA_OFFSETOF(struct_, member_)  offsetof(struct_, member_)
 
 	// ------------------------------------------------------------------------
 	// EA_SIZEOF_MEMBER
