@@ -572,23 +572,10 @@
 // ------------------------------------------------------------------------
 // ssize_t
 // signed equivalent to size_t.
-// This is defined by GCC (except the QNX implementation of GCC) but not by other compilers.
+// POSIX defines it in <sys/types.h>. Other platforms, such as Windows, don't
+// have it; use ptrdiff_t or intptr_t there.
 //
-#if !defined(__GNUC__)
-	// As of this writing, all non-GCC compilers significant to us implement 
-	// uintptr_t the same as size_t. However, this isn't guaranteed to be 
-	// so for all compilers, as size_t may be based on int, long, or long long.
-	#if !defined(_SSIZE_T_) && !defined(_SSIZE_T_DEFINED)
-		#define _SSIZE_T_
-		#define _SSIZE_T_DEFINED
-
-		#if defined(_MSC_VER) && (EA_PLATFORM_PTR_SIZE == 8)
-			typedef __int64 ssize_t;
-		#else
-			typedef long ssize_t;
-		#endif
-	#endif
-#else
+#if defined(__GNUC__)
 	#include <sys/types.h>
 #endif
 
