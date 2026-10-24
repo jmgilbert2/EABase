@@ -103,6 +103,7 @@
  *
  *  C++20 functionality
  *     EA_COMPILER_NO_DESIGNATED_INITIALIZERS
+ *     EA_COMPILER_HAS_THREE_WAY_COMPARISON
  *     
  *-----------------------------------------------------------------------------
  *
@@ -1326,6 +1327,20 @@
 			// supported.
 		#else
 			#define EA_COMPILER_NO_DESIGNATED_INITIALIZERS 1
+		#endif
+	#endif
+
+
+	// EA_COMPILER_HAS_THREE_WAY_COMPARISON
+	//
+	// Defined as 1 if the compiler supports the C++20 three-way comparison operator (operator<=>),
+	// else undefined. Based on the standard feature-test macro. Code that uses std::strong_ordering
+	// and the other comparison category types must include <compare>.
+	// https://en.cppreference.com/w/cpp/language/operator_comparison#Three-way_comparison
+	//
+	#if !defined(EA_COMPILER_HAS_THREE_WAY_COMPARISON)
+		#if defined(__cpp_impl_three_way_comparison) && (__cpp_impl_three_way_comparison >= 201907L)
+			#define EA_COMPILER_HAS_THREE_WAY_COMPARISON 1
 		#endif
 	#endif
 
