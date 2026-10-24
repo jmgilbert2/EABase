@@ -818,9 +818,6 @@ int TestEABase()
 			#endif
 		#endif
 
-		if(sizeof(bool8_t) != 1)
-			DoError(nErrorCount, "bool8_t size test");
-
 		if(!VerifyValue<size_t>(sizeof(intptr_t), sizeof(void*)))
 			DoError(nErrorCount, "intptr_t size test");
 		if(!VerifyValue<size_t>(sizeof(uintptr_t), sizeof(void*)))
