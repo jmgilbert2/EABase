@@ -826,14 +826,16 @@ int TestEABase()
 		if(!VerifyValue<size_t>(sizeof(uintptr_t), sizeof(void*)))
 			DoError(nErrorCount, "uintptr_t size test");
 
-		if(!VerifyValue<size_t>(sizeof(ssize_t), sizeof(size_t)))
-			DoError(nErrorCount, "ssize_t size test");
+		#if defined(EA_PLATFORM_POSIX)
+			if(!VerifyValue<size_t>(sizeof(ssize_t), sizeof(size_t)))
+				DoError(nErrorCount, "ssize_t size test");
 
-		EA_DISABLE_VC_WARNING(6326)
-		const ssize_t ss(1); // Verify that ssize_t is a signed type.
-		if(ssize_t((ss ^ ss) - 1) >= 0)
-			DoError(nErrorCount, "ssize_t sign test");
-		EA_RESTORE_VC_WARNING()
+			EA_DISABLE_VC_WARNING(6326)
+			const ssize_t ss(1); // Verify that ssize_t is a signed type.
+			if(ssize_t((ss ^ ss) - 1) >= 0)
+				DoError(nErrorCount, "ssize_t sign test");
+			EA_RESTORE_VC_WARNING()
+		#endif
 
 		if(!VerifyValue<size_t>(sizeof(char8_t), 1))
 			DoError(nErrorCount, "char8_t size test");

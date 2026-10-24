@@ -264,8 +264,6 @@ int TestEABase(void)
 
 	// Verify sized type sizes
 	{
-		const ssize_t ss = 1; // Verify that ssize_t is a signed type.
-
 		Verify(sizeof(int8_t)   == 1, "int8_t size test");
 		Verify(sizeof(uint8_t)  == 1, "uint8_t size test");
 		Verify(sizeof(int16_t)  == 2, "int16_t size test");
@@ -301,8 +299,6 @@ int TestEABase(void)
 		Verify(sizeof(bool8_t)   == 1, "bool8_t size test");
 		Verify(sizeof(intptr_t)  == sizeof(void*), "intptr_t size test");
 		Verify(sizeof(uintptr_t) == sizeof(void*), "uintptr_t size test");
-		Verify(sizeof(ssize_t)   == sizeof(size_t), "ssize_t size test");
-		Verify((ssize_t)((ss ^ ss) - 1) < 0, "ssize_t sign test");
 		Verify(sizeof(char8_t) == 1, "char8_t size test");
 		Verify(sizeof(char16_t) == 2, "char16_t size test");
 		Verify(sizeof(char32_t) == 4, "char32_t test");

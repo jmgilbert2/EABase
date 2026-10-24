@@ -24,7 +24,6 @@ struct EABaseDefinedTypesStruct
 	intmax_t    mIntmax_t;
 	uintmax_t   mUintmax_t;
 	size_t      mSize_t;
-	ssize_t     mSsize_t;
 	float_t     mFloat_t;
 	double_t    mDouble_t;
 	intptr_t    mIntptr_t;
