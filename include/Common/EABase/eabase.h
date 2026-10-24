@@ -30,26 +30,15 @@
 
 
 // ------------------------------------------------------------------------
-// The C++ standard defines size_t as a built-in type. Some compilers are
-// not standards-compliant in this respect, so we need an additional include.
-// The case is similar with wchar_t under C++.
+// Include stddef.h for size_t, ptrdiff_t, NULL and offsetof.
 
-#if defined(EA_COMPILER_GNUC) || defined(EA_COMPILER_MSVC) || defined(EA_WCHAR_T_NON_NATIVE) || defined(EA_PLATFORM_SONY)
-	#if defined(EA_COMPILER_MSVC)
-		#pragma warning(push, 0)
-		#pragma warning(disable: 4265 4365 4836 4574)
-	#endif
-	#include <stddef.h>
-	#if defined(EA_COMPILER_MSVC)
-		#pragma warning(pop)
-	#endif
+#if defined(EA_COMPILER_MSVC)
+	#pragma warning(push, 0)
+	#pragma warning(disable: 4265 4365 4836 4574)
 #endif
-
-// ------------------------------------------------------------------------
-// Include stddef.h on Apple's clang compiler to ensure the ptrdiff_t type
-// is defined.
-#if defined(EA_COMPILER_CLANG) && defined(EA_PLATFORM_APPLE)
-	#include <stddef.h>
+#include <stddef.h>
+#if defined(EA_COMPILER_MSVC)
+	#pragma warning(pop)
 #endif
 
 // ------------------------------------------------------------------------
@@ -61,27 +50,6 @@
 	#include <assert.h>
 #endif
 
-
-// ------------------------------------------------------------------------
-// By default, GCC defines NULL as ((void*)0), which is the
-// C definition. This causes all sort of problems for C++ code, so it is
-// worked around by undefining NULL.
-
-#if defined(NULL)
-	#undef NULL
-#endif
-
-
-// ------------------------------------------------------------------------
-// Define the NULL pointer. This is normally defined in <stddef.h>, but we
-// don't want to force a global dependency on that header, so the definition
-// is duplicated here.
-
-#if defined(__cplusplus)
-	#define NULL 0
-#else
-	#define NULL ((void*)0)
-#endif
 
 
 // ------------------------------------------------------------------------
