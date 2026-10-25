@@ -12,7 +12,6 @@ struct EABaseDefinedTypesStruct
 	char16_t    mChar16_t;
 	char32_t    mChar32_t;
 	wchar_t     mWchar_t;
-	bool8_t     mBool8_t;
 	int8_t      mInt8_t;
 	int16_t     mInt16_t;
 	int32_t     mInt32_t;

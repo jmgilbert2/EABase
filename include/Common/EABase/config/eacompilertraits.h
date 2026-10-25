@@ -142,14 +142,6 @@
 	#if defined(__GNUC__) 
 		#if (((__GNUC__ * 100) + __GNUC_MINOR__) >= 302) // Also, GCC defines _HAS_C9X.
 			#define EA_COMPILER_HAS_C99_TYPES 1 // The compiler is not necessarily a C99 compiler, but it defines C99 types.
-			
-			#ifndef __STDC_LIMIT_MACROS
-				#define __STDC_LIMIT_MACROS 1
-			#endif
-			
-			#ifndef __STDC_CONSTANT_MACROS
-				#define __STDC_CONSTANT_MACROS 1    // This tells the GCC compiler that we want it to use its native C99 types.
-			#endif
 		#endif
 	#endif
 

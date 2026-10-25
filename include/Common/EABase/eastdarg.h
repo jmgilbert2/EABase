@@ -49,15 +49,7 @@
 //         va_end(argsCopy);
 //     }
 //
-#ifndef va_copy
-	#if defined(__va_copy) // GCC and others define this for non-C99 compatibility.
-		#define va_copy(dest, src) __va_copy((dest), (src))
-	#else
-		// This may not work for some platforms, depending on their ABI.
-		// It works for Microsoft x86,x64, and PowerPC-based platforms.
-		#define va_copy(dest, src) memcpy(&(dest), &(src), sizeof(va_list))
-	#endif
-#endif
+// <stdarg.h> defines it.
  
  
  
