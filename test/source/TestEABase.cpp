@@ -666,7 +666,7 @@ private: // For portability with pre-C++11 compilers, make the function private.
 
 #if !defined(EA_COMPILER_NO_USER_DEFINED_LITERALS)
 	// Conversion example
-	inline long double operator"" _deg(long double degrees)
+	inline long double operator""_deg(long double degrees)
 		{ return (degrees * 3.141592) / 180; }
 
 	// Custom type example
@@ -678,7 +678,7 @@ private: // For portability with pre-C++11 compilers, make the function private.
 		uint64_t mX;
 	};
 
-	UDLTest operator"" _udl(unsigned long long x) // The type must be unsigned long long and can't be uint64_t, as uint64_t might be unsigned long int.
+	UDLTest operator""_udl(unsigned long long x) // The type must be unsigned long long and can't be uint64_t, as uint64_t might be unsigned long int.
 		{ return UDLTest(x); }
 #endif
 
@@ -2004,7 +2004,7 @@ int TestEACompiler()
 		// The operators are defined above.
 
 		// Conversion example
-		double x = 90.0_deg; // x = 1.570796
+		long double x = 90.0_deg; // x = 1.570796
 		EATEST_VERIFY((x > 1.57) && (x < 1.58));
 
 		// Custom type example

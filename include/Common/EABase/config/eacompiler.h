@@ -1178,7 +1178,11 @@
 	// http://en.cppreference.com/w/cpp/language/inline
 	//
 	#if !defined(EA_COMPILER_NO_INLINE_VARIABLES)
-		#define EA_COMPILER_NO_INLINE_VARIABLES 1
+		#if defined(__cpp_inline_variables) && (__cpp_inline_variables >= 201606L)     // C++17 feature-test macro
+			// supported.
+		#else
+			#define EA_COMPILER_NO_INLINE_VARIABLES 1
+		#endif
 	#endif
 
 
@@ -1377,7 +1381,9 @@
 	//
 	#if !defined(EA_COMPILER_NO_ALIGNOF)
 		// Not supported by VC++ as of VS2013, though EA_ALIGN_OF is supported on all coompilers as an alternative.
-		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 209)    // Clang 2.9+, including Apple's Clang.
+		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(_MSC_VER) && (EA_COMPILER_VERSION >= 1900)     // VS2015+
+			// supported.
+		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 209)    // Clang 2.9+, including Apple's Clang.
 			// supported.
 		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__GNUC__) && (EA_COMPILER_VERSION >= 4005)  // GCC 4.5+
 			// supported.
@@ -1393,7 +1399,9 @@
 	//
 	#if !defined(EA_COMPILER_NO_ALIGNAS)
 		// Not supported by VC++ as of VS2013.
-		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 401) && defined(__apple_build_version__)    // Apple clang 4.1+
+		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(_MSC_VER) && (EA_COMPILER_VERSION >= 1900)     // VS2015+
+			// supported.
+		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 401) && defined(__apple_build_version__)    // Apple clang 4.1+
 			// supported.
 		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 300) && !defined(__apple_build_version__) // Clang 3.0+, not including Apple's Clang.
 			// supported.
@@ -1435,7 +1443,9 @@
 	//
 	#if !defined(EA_COMPILER_NO_INHERITING_CONSTRUCTORS)
 		// Not supported by VC++ as of VS2013.
-		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && EA_COMPILER_HAS_FEATURE(cxx_inheriting_constructors)    // Clang
+		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(_MSC_VER) && (EA_COMPILER_VERSION >= 1900)     // VS2015+
+			// supported.
+		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && EA_COMPILER_HAS_FEATURE(cxx_inheriting_constructors)    // Clang
 			// supported.
 		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__GNUC__) && (EA_COMPILER_VERSION >= 4008)   // GCC 4.8+
 			// supported.
@@ -1452,7 +1462,9 @@
 	//
 	#if !defined(EA_COMPILER_NO_USER_DEFINED_LITERALS)
 		// Not supported by VC++ as of VS2013.
-		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 401) && defined(__apple_build_version__)    // Apple clang 4.1+
+		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(_MSC_VER) && (EA_COMPILER_VERSION >= 1900)     // VS2015+
+			// supported.
+		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 401) && defined(__apple_build_version__)    // Apple clang 4.1+
 			// supported.
 		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 301) && !defined(__apple_build_version__) // Clang 3.1+, not including Apple's Clang.
 			// supported.
@@ -1490,7 +1502,9 @@
 	//
 	#if !defined(EA_COMPILER_NO_EXTENDED_SIZEOF)
 		// Not supported by VC++ as of VS2013.
-		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 401) && defined(__apple_build_version__)    // Apple clang 4.1+
+		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(_MSC_VER) && (EA_COMPILER_VERSION >= 1900)     // VS2015+
+			// supported.
+		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 401) && defined(__apple_build_version__)    // Apple clang 4.1+
 			// supported.
 		// Versions of EDG prior to 4.5 only support extended sizeof in non-member functions. Full support was added in 4.5
 		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__EDG_VERSION__) && (__EDG_VERSION__ >= 405) // EDG 4.5+.
@@ -1512,7 +1526,9 @@
 	//
 	#if !defined(EA_COMPILER_NO_INLINE_NAMESPACES)
 		// Not supported by VC++ as of VS2013.
-		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(__EDG_VERSION__) && (__EDG_VERSION__ >= 405) // EDG 4.5+.
+		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(_MSC_VER) && (EA_COMPILER_VERSION >= 1900)     // VS2015+
+			// supported.
+		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__EDG_VERSION__) && (__EDG_VERSION__ >= 405) // EDG 4.5+.
 			// supported.
 		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 209)   // Clang 2.9+, including Apple's Clang.
 			// supported.
@@ -1530,7 +1546,9 @@
 	//
 	#if !defined(EA_COMPILER_NO_UNRESTRICTED_UNIONS)
 		// Not supported by VC++ as of VS2013.
-		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(__EDG_VERSION__) && (__EDG_VERSION__ >= 406) // EDG 4.6+.
+		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(_MSC_VER) && (EA_COMPILER_VERSION >= 1900)     // VS2015+
+			// supported.
+		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__EDG_VERSION__) && (__EDG_VERSION__ >= 406) // EDG 4.6+.
 			// supported.
 		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 401) && defined(__apple_build_version__)  // Apple clang 4.1+
 			// supported.
@@ -1661,7 +1679,9 @@
 	//
 	#if !defined(EA_COMPILER_NO_UNICODE_STRING_LITERALS)
 		// Not supported by VC++ as of VS2013.
-		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(__EDG_VERSION__) && (__EDG_VERSION__ >= 407) // EDG 4.7+.
+		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(_MSC_VER) && (EA_COMPILER_VERSION >= 1900)     // VS2015+
+			// supported.
+		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__EDG_VERSION__) && (__EDG_VERSION__ >= 407) // EDG 4.7+.
 			// supported. It's not clear if it's v4.4 or v4.7 that adds this support.
 		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 401) && defined(__apple_build_version__)    // Apple clang 4.1+
 			// supported.
@@ -1697,7 +1717,9 @@
 	#if !defined(EA_COMPILER_NO_UNICODE_CHAR_NAME_LITERALS)
 		// VC++ up till at least VS2013 supports \u and \U but supports them wrong with respect to the C++11 Standard.
 
-		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 401) && defined(__apple_build_version__)    // Apple clang 4.1+
+		#if defined(EA_COMPILER_CPP11_ENABLED) && defined(_MSC_VER) && (EA_COMPILER_VERSION >= 1900)     // VS2015+
+			// supported.
+		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 401) && defined(__apple_build_version__)    // Apple clang 4.1+
 			// supported.
 		#elif defined(EA_COMPILER_CPP11_ENABLED) && defined(__clang__) && (EA_COMPILER_VERSION >= 301) && !defined(__apple_build_version__) // Clang 3.1+, not including Apple's Clang.
 			// supported. 
