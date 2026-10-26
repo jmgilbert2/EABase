@@ -1955,7 +1955,7 @@
 	//     struct B { virtual void f() EA_SEALED; };
 	// 
 	#ifndef EA_SEALED
-		#if defined(EA_COMPILER_MSVC) && (EA_COMPILER_VERSION >= 1400) // VS2005 (VC8) and later
+		#if defined(EA_COMPILER_MSVC) && (EA_COMPILER_VERSION >= 1400) && !defined(EA_COMPILER_CLANG_CL) // VS2005 (VC8) and later; clang-cl warns (-Wmicrosoft-sealed)
 			#define EA_SEALED sealed
 		#else
 			#define EA_SEALED 
@@ -1972,7 +1972,7 @@
 	//     struct X EA_ABSTRACT { virtual void f(){} };
 	// 
 	#ifndef EA_ABSTRACT
-		#if defined(EA_COMPILER_MSVC) && (EA_COMPILER_VERSION >= 1400) // VS2005 (VC8) and later
+		#if defined(EA_COMPILER_MSVC) && (EA_COMPILER_VERSION >= 1400) && !defined(EA_COMPILER_CLANG_CL) // VS2005 (VC8) and later; clang-cl warns (-Wmicrosoft-abstract)
 			#define EA_ABSTRACT abstract
 		#else
 			#define EA_ABSTRACT 
