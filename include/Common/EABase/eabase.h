@@ -32,14 +32,7 @@
 // ------------------------------------------------------------------------
 // Include stddef.h for size_t, ptrdiff_t, NULL and offsetof.
 
-#if defined(EA_COMPILER_MSVC)
-	#pragma warning(push, 0)
-	#pragma warning(disable: 4265 4365 4836 4574)
-#endif
 #include <stddef.h>
-#if defined(EA_COMPILER_MSVC)
-	#pragma warning(pop)
-#endif
 
 // ------------------------------------------------------------------------
 // Include assert.h on C11 supported compilers so we may allow static_assert usage
@@ -58,15 +51,9 @@
 // __STDC_LIMIT_MACROS, __STDC_CONSTANT_MACROS or __STDC_FORMAT_MACROS.
 
 #include <inttypes.h> // PRId8, SCNd8, etc.
-#if defined(_MSC_VER)
-	#pragma warning(push, 0)
-#endif
 #include <stdint.h>   // int32_t, INT64_C, UINT8_MAX, etc.
 #include <math.h>     // float_t, double_t, etc.
 #include <float.h>    // FLT_EVAL_METHOD.
-#if defined(_MSC_VER)
-	#pragma warning(pop)
-#endif
 
 
 // ------------------------------------------------------------------------
