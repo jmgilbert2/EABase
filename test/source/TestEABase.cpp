@@ -1417,6 +1417,17 @@ int TestEAPlatform()
 	// Todo
 #endif
 
+// With MSVC (cl and clang-cl), EA_COMPILER_NO_EXCEPTIONS follows the exception handling switches and MSVC STL's
+// _HAS_EXCEPTIONS, and EA_COMPILER_NO_UNWIND follows _CPPUNWIND.
+#if defined(EA_COMPILER_MSVC)
+	#if (!defined(_CPPUNWIND) || (defined(_HAS_EXCEPTIONS) && (_HAS_EXCEPTIONS == 0))) != defined(EA_COMPILER_NO_EXCEPTIONS)
+		#error "EA_COMPILER_NO_EXCEPTIONS doesn't match _CPPUNWIND and _HAS_EXCEPTIONS"
+	#endif
+	#if !defined(_CPPUNWIND) != defined(EA_COMPILER_NO_UNWIND)
+		#error "EA_COMPILER_NO_UNWIND doesn't match _CPPUNWIND"
+	#endif
+#endif
+
 #ifndef EA_COMPILER_NO_EXCEPTIONS
 	static bool TestNE()
 	{

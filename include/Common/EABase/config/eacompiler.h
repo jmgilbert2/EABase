@@ -592,6 +592,13 @@
 	// systems of which some enable exception handling while others
 	// don't, check for EA_COMPILER_NO_EXCEPTIONS being defined. 
 	//
+	// With MSVC (cl and clang-cl), EA_COMPILER_NO_EXCEPTIONS is defined when C++ exception handling is
+	// disabled (no /EHs or /EHa, which includes /kernel builds), and when _HAS_EXCEPTIONS is defined to 0:
+	// the MSVC STL switch for building without exceptions, predefined by the user or by vcruntime.h in
+	// kernel mode. Only a _HAS_EXCEPTIONS defined before this header is seen, which a command-line
+	// definition always is. EA_COMPILER_NO_UNWIND is defined when no unwinding code is generated (no
+	// _CPPUNWIND), so _HAS_EXCEPTIONS=0 with /EHsc defines EA_COMPILER_NO_EXCEPTIONS only.
+	//
 	#if !defined(EA_COMPILER_NO_EXCEPTIONS) && !defined(EA_COMPILER_NO_UNWIND)
 		#if defined(EA_COMPILER_GNUC) && defined(_NO_EX) // GCC on some platforms defines _NO_EX when exceptions are disabled.
 			#define EA_COMPILER_NO_EXCEPTIONS 1
@@ -599,8 +606,11 @@
 		#elif (defined(EA_COMPILER_CLANG) || defined(EA_COMPILER_GNUC) || defined(EA_COMPILER_INTEL) || defined(EA_COMPILER_RVCT)) && !defined(__EXCEPTIONS) // GCC and most EDG-based compilers define __EXCEPTIONS when exception handling is enabled.
 			#define EA_COMPILER_NO_EXCEPTIONS 1
 
-		#elif (defined(EA_COMPILER_MSVC)) && !defined(_CPPUNWIND)
-			#define EA_COMPILER_NO_UNWIND 1
+		#elif defined(EA_COMPILER_MSVC) && (!defined(_CPPUNWIND) || (defined(_HAS_EXCEPTIONS) && (_HAS_EXCEPTIONS == 0)))
+			#define EA_COMPILER_NO_EXCEPTIONS 1
+			#if !defined(_CPPUNWIND)
+				#define EA_COMPILER_NO_UNWIND 1
+			#endif
 
 		#endif // EA_COMPILER_NO_EXCEPTIONS / EA_COMPILER_NO_UNWIND
 	#endif // !defined(EA_COMPILER_NO_EXCEPTIONS) && !defined(EA_COMPILER_NO_UNWIND)
